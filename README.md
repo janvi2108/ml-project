@@ -1,4 +1,4 @@
-🎓 Student Math Score Predictor
+🎓 **Student Math Score Predictor**
 
 A Machine Learning web application that predicts a student's **Math Score** based on demographic and academic features such as gender, parental education, lunch type, and reading/writing scores.
 
@@ -161,4 +161,5 @@ Predicted Math Score
 * Mobile responsiveness
 
 ---
+
 
