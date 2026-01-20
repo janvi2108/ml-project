@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f3;
+        }
+        .container {
+            width: 40%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            margin-top: 80px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        .result {
+            font-size: 28px;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            background: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Prediction Result</h2>
+
+    <div class="result">
+        Predicted Math Score: {{ results }}
+    </div>
+
+    <a href="/">Predict Again</a>
+</div>
+
+</body>
+</html>

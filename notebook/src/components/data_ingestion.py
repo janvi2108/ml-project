@@ -16,9 +16,9 @@ from notebook.src.components.model_trainer import ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path: str = os.path.join('artifacts', 'train.csv')
-    test_data_path: str = os.path.join('artifacts', 'test.csv')
-    raw_data_path: str = os.path.join('artifacts', 'data.csv')
+    train_data_path: str = os.path.join("artifacts", "train.csv")
+    test_data_path: str = os.path.join("artifacts", "test.csv")
+    raw_data_path: str = os.path.join("artifacts", "raw.csv")
 
 
 class DataIngestion:
@@ -26,7 +26,6 @@ class DataIngestion:
         self.ingestion_config = DataIngestionConfig()
 
     def initiate_data_ingestion(self):
-        print("Running Data Ingestion...")
         logging.info("Data Ingestion started")
 
         try:
@@ -35,14 +34,14 @@ class DataIngestion:
 
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path), exist_ok=True)
 
-            df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
+            df.to_csv(self.ingestion_config.raw_data_path, index=False)
 
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
 
-            train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
-            test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
+            train_set.to_csv(self.ingestion_config.train_data_path, index=False)
+            test_set.to_csv(self.ingestion_config.test_data_path, index=False)
 
-            print("Data Ingestion Completed")
+            logging.info("Data Ingestion completed successfully")
 
             return (
                 self.ingestion_config.train_data_path,
@@ -50,32 +49,31 @@ class DataIngestion:
             )
 
         except Exception as e:
-            print("ERROR IN DATA INGESTION:", e)
+            logging.error("Error in Data Ingestion")
             raise CustomException(e, sys)
 
 
 if __name__ == "__main__":
+    print("Running Data Ingestion...")
     obj = DataIngestion()
     train_data, test_data = obj.initiate_data_ingestion()
 
     print("Running Data Transformation...")
-
     data_transformation = DataTransformation()
     train_arr, test_arr = data_transformation.initiate_data_transformation(
         train_data, test_data
     )
 
     print("Running Model Training...")
-
     model_trainer = ModelTrainer()
     best_model, metrics = model_trainer.initiate_model_trainer(train_arr, test_arr)
 
     print("\n========== REGRESSION RESULTS ==========")
-print("Best Model :", best_model)
-print("R2 Score   :", metrics[0])
-print("MAE        :", metrics[1])
-print("RMSE       :", metrics[2])
-print("=======================================\n")
+    print("Best Model :", best_model)
+    print("R2 Score   :", metrics["r2"])
+    print("MAE        :", metrics["mae"])
+    print("RMSE       :", metrics["rmse"])
+    print("Best Params:", metrics["best_params"])
+    print("=======================================\n")
 
-
-print("Pipeline Finished Successfully!")
+    print("Pipeline Finished Successfully! 🚀")
